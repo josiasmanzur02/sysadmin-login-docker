@@ -1,0 +1,16 @@
+{
+  "name": "sysadmin-login-docker",
+  "version": "1.0.0",
+  "description": "This is a basic login screen for my Systems Administration project, It simply needs to authenticate and the purpose is to learn and do some research on docker and then present a live demo of the projects",
+  "license": "ISC",
+  "author": "Josias Manzur",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  }
+}
