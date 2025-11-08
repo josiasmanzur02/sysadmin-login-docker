@@ -16,6 +16,7 @@ let quiz = [];            // Stores flags from database
 
 const db = new pg.Client({//create new db client with details from .env file
   connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_SSL === "true" ? { rejectUnauthorized: false } : false,
 });
 
 db.connect();//start connection to db

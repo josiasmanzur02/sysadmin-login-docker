@@ -11,7 +11,7 @@ Flag guessing game with user registration/login, per-session scoring, and a shar
 ## Requirements
 - Node.js 18+ and npm (for local development)
 - PostgreSQL 13+ instance reachable from the app/container
-- `DATABASE_URL`, `SESSION_SECRET`, optional `PORT`, and `COOKIE_SECURE` environment variables
+- `DATABASE_URL`, `SESSION_SECRET`, optional `PORT`, `COOKIE_SECURE`, and `DATABASE_SSL` environment variables
 
 ## Environment variables
 Copy `.env.example` to `.env` and replace the placeholder values (never commit real secrets):
@@ -21,6 +21,7 @@ DATABASE_URL=postgres://username:password@host:5432/flagquiz
 SESSION_SECRET=change-me
 PORT=3000
 COOKIE_SECURE=false
+DATABASE_SSL=false
 ```
 
 ## Database quick start
