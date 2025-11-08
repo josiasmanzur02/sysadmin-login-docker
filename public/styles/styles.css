@@ -27,14 +27,17 @@ html {
 body {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background: radial-gradient(circle at top, #2b2b2b 0%, #0f0f0f 100%);
   background-color: var(--bg-color);
   font-family: 'Nunito Sans', sans-serif;
   color: var(--text-main);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+  position: relative;
 }
 
 form {
@@ -112,12 +115,16 @@ input[type="submit"] {
   transition: all 0.25s ease;
   box-shadow: 0 0 12px var(--accent-glow);
   margin-top: 0.8rem;
-  width: min(85%, 420px);
+  width: min(100%, 420px);
   align-self: center;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  padding: 0 1.2rem;
+  min-height: 52px;
+  line-height: 1;
+  appearance: none;
 }
 
 input[type="submit"]:hover {
@@ -348,12 +355,13 @@ button[type="submit"] {
   cursor: pointer;
   transition: all 0.25s ease;
   margin-top: 1.6rem; 
-  width: min(85%, 420px);
+  width: min(100%, 420px);
   align-self: center;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  line-height: 1;
 }
 
 button[type="submit"]:hover {
@@ -389,6 +397,7 @@ button[type="submit"]:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
   padding: 0 5%;
   color: var(--text-main);
   font-family: 'Nunito Sans', sans-serif;
@@ -415,6 +424,12 @@ button[type="submit"]:hover {
   text-decoration: none;
   box-shadow: 0 0 10px rgba(0, 198, 255, 0.25);
   transition: all 0.25s ease;
+}
+
+.leaderboard-logout {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .logout-btn:hover {
@@ -576,14 +591,16 @@ button[type="submit"]:hover {
   body {
     padding-bottom: max(env(safe-area-inset-bottom, 12px), 12px);
     padding-top: max(env(safe-area-inset-top, 12px), 12px);
+    justify-content: flex-start;
+    align-items: stretch;
   }
 
   form,
   .container,
   .end-screen {
-    width: 100%;
+    width: calc(100% - 2rem);
     max-width: 100%;
-    margin: 0 1rem;
+    margin: 1.5rem auto;
     padding: 2.4rem 1.5rem;
   }
 
@@ -591,5 +608,26 @@ button[type="submit"]:hover {
   button[type="submit"],
   .restart-button {
     width: 100%;
+  }
+
+  #countryFlag {
+    font-size: 4rem;
+  }
+
+  .horizontal-container h3 {
+    font-size: 1.1rem;
+  }
+
+  .game-header {
+    position: static;
+    padding: 1.25rem 1rem 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .leaderboard-logout {
+    width: 100%;
+    justify-content: flex-start;
   }
 }

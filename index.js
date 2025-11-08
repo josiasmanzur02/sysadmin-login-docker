@@ -78,7 +78,12 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.static("public")); 
  
 // Login and registration pages
-app.get("/", (req, res) => res.render("login.ejs"));
+app.get("/", (req, res) => {
+  if (req.session?.user) {
+    return res.redirect("/flagguess");
+  }
+  res.render("login.ejs");
+});
 app.get("/register", (req, res) => res.render("register.ejs"));
  
 // Registration route  
