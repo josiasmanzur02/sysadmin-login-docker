@@ -1,18 +1,20 @@
 <%- include("partials/header.ejs") %>
 
-<form action="/" method="POST"> 
+<form action="/login" method="POST"> 
     <span class="title">Sign In</span>
     <input type="text" name="username" id="user" placeholder="Username">
     <input type="password" name="password" id="password" placeholder="Password">
     <div class="button">
         <input type="submit" value="Login" class="submit">
-        <span class="rip1"></span> 
+        <span class="rip1"></span>  
         <span class="rip2"></span> 
     </div>
-    <div class="links"> 
-        <a href="#">Sign up</a>
-        <a href="#">Forgot your password?</a> 
-    </div>
-</form>   
+    <% if (locals.error) { %>
+    <div class="error-message"><span><%=error%></span></div>
+    <% } %>
+    <div class="links">  
+        <a href="/register">Sign up</a>
+    </div> 
+</form>      
 
 <%- include("partials/footer.ejs") %>  

@@ -4,17 +4,20 @@ FROM node:18-alpine
 # 2. Set working directory inside the container
 WORKDIR /app
 
-# 3. Copy package.json and package-lock.json first
+# 3. Install build tools required for native modules (e.g., bcrypt)
+RUN apk add --no-cache python3 make g++
+
+# 4. Copy package manifests first for better build caching
 COPY package*.json ./
 
-# 4. Install dependencies
-RUN npm install
+# 5. Install production dependencies only
+RUN npm ci --omit=dev
 
-# 5. Copy the rest of your application files
+# 6. Copy the rest of the source
 COPY . .
 
-# 6. Expose the port your app runs on
+# 7. Expose the port your app listens on
 EXPOSE 3000
- 
-# 7. Start the app
-CMD ["node", "index.js"] 
+
+# 8. Run the server
+CMD ["node", "index.js"]

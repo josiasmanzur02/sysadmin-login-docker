@@ -1,0 +1,24 @@
+<%- include("partials/header.ejs") %>
+  
+<form action="/registration" method="POST"> 
+    <span class="title">Sign Up</span>
+    <input type="text" name="username" id="user" placeholder="Username">
+    <input type="password" name="password" id="password" placeholder="Password">
+    <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
+    <div class="button">
+        <input type="submit" value="Sign Up" class="submit">
+        <span class="rip1"></span> 
+        <span class="rip2"></span> 
+    </div>
+    <% if (locals.error) { %>
+    <div class="error-message"><span><%=error%></span></div>
+    <% } %>
+    <% if (locals.message) { %>
+    <div class="success-message"><span><%=message%></span></div>
+    <% } %>
+    <div class="links">  
+        <a href="/">Back to Login</a> 
+    </div> 
+</form>     
+    
+<%- include("partials/footer.ejs") %>    

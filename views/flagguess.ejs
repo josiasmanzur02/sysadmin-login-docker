@@ -1,0 +1,54 @@
+<%- include("partials/header.ejs") %>
+
+<header class="game-header"> 
+  <h2 class="welcome">Welcome, <%= username || (locals.username ?? "Player") %> 👋</h2>
+  <div class="leaderboard-logout">
+    <a href="/leaderboard" class="logout-btn">Leaderboard</a>
+    <a href="/logout" class="logout-btn">Logout</a>
+  </div>
+</header>
+
+<div id="app">
+  <% if (wasCorrect === false) { %>
+    <div class="end-screen">
+      <h2>Game Over</h2>
+      <p>Total Score: <strong><%= totalScore %></strong></p>
+      <p class="correct-answer">The correct answer was <%= previousAnswer %>.</p>
+      <div class="end-screen__actions">
+        <a href="/flagguess" class="restart-button">Restart Game</a>
+        <a href="/leaderboard" class="restart-button">View Leaderboard</a>
+      </div>
+    </div>
+  <% } else { %>
+    <form class="container" action="/submit" method="post">
+      <div class="horizontal-container">
+        <h3>
+          Total Score: 
+          <span id="score"><%= totalScore %></span>
+        </h3>
+      </div>
+
+      <h1 id="countryFlag"><%= question.flag %></h1>
+
+      <div class="answer-container">
+        <input 
+          type="text" 
+          name="answer" 
+          id="userInput" 
+          placeholder="Name the country" 
+          autofocus 
+          autocomplete="off"
+        >
+      </div> 
+
+      <button type="submit">SUBMIT</button>
+
+      <% if (wasCorrect === true) { %>
+        <p class="checkmark">✔ Correct!</p>
+      <% } %>
+    </form>
+  <% } %>
+</div>
+
+
+<%- include("partials/footer.ejs") %>
