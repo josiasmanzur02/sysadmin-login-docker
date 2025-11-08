@@ -14,18 +14,44 @@ app.set("view engine", "ejs");
 
 let quiz = [];            // Stores flags from database
 
-const db = new pg.Client({//create new db client with details from .env file
+const dbConfig = {
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.DATABASE_SSL === "true" ? { rejectUnauthorized: false } : false,
-});
+};
 
-db.connect();//start connection to db
+const db = new pg.Pool(dbConfig); // shared pool for queries + sessions
+
+db.connect()
+  .then((client) => {
+    client.release();
+    console.log("Connected to database");
+  })
+  .catch((err) => {
+    console.error("Database connection error:", err);
+    process.exit(1);
+  });
 
 app.set("trust proxy", 1);
 
 const PgSession = pgSession(session);
 
 const cookieSecure = process.env.COOKIE_SECURE === "true";
+
+if (cookieSecure) {
+  app.use((req, res, next) => {
+    const forwardedProto = req.headers["x-forwarded-proto"];
+    const isHttps =
+      req.secure ||
+      (typeof forwardedProto === "string" &&
+        forwardedProto.split(",")[0].trim() === "https");
+    if (isHttps) {
+      return next();
+    }
+    const host = req.headers.host;
+    if (!host) return next();
+    return res.redirect(307, `https://${host}${req.originalUrl}`);
+  });
+}
 
 app.use( 
   session({ 
@@ -37,10 +63,12 @@ app.use(
     secret: process.env.SESSION_SECRET || "supersecretkey",
     resave: false,
     saveUninitialized: false,
+    proxy: cookieSecure,
     cookie: { 
       maxAge: 1000 * 60 * 60, // 1 hour per session
-      secure: cookieSecure,
+      secure: cookieSecure ? "auto" : false,
       sameSite: cookieSecure ? "none" : "lax",
+      httpOnly: true,
     },
   })
 );
