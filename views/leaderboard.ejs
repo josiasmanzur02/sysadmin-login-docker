@@ -4,28 +4,30 @@
   <h1>🏆 Flag Guessing Leaderboard</h1>
 
   <% if (highscores && highscores.length > 0) { %>
-    <table class="leaderboard-table">
-      <thead> 
-        <tr>
-          <th>Rank</th>
-          <th>Username</th>
-          <th>Highest Streak</th>
-          <th>Total Correct</th>
-          <th>Accuracy</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% highscores.forEach((player, index) => { %>
+    <div class="leaderboard-table-wrapper">
+      <table class="leaderboard-table">
+        <thead> 
           <tr>
-            <td><%= index + 1 %></td>
-            <td><%= player.username %></td> 
-            <td><%= player.highest_streak %></td>
-            <td><%= player.total_correct %></td>
-            <td><%= player.accuracy %>%</td>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Highest Streak</th>
+            <th>Total Correct</th>
+            <th>Accuracy</th>
           </tr>
-        <% }) %> 
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% highscores.forEach((player, index) => { %>
+            <tr>
+              <td data-label="Rank"><%= index + 1 %></td>
+              <td data-label="Username"><%= player.username %></td> 
+              <td data-label="Highest Streak"><%= player.highest_streak %></td>
+              <td data-label="Total Correct"><%= player.total_correct %></td>
+              <td data-label="Accuracy"><%= player.accuracy %>%</td>
+            </tr>
+          <% }) %> 
+        </tbody>
+      </table>
+    </div>
   <% } else { %>
     <p>No scores yet — be the first to play!</p>
   <% } %>
