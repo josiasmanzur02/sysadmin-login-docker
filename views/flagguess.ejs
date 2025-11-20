@@ -50,5 +50,20 @@
   <% } %>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/twemoji.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+  // Render flag emoji as SVG images so they display on Windows too
+  document.addEventListener("DOMContentLoaded", () => {
+    const flagEl = document.getElementById("countryFlag");
+    if (!flagEl) return;
+
+    const emoji = flagEl.textContent.trim();
+    flagEl.innerHTML = twemoji.parse(emoji, {
+      folder: "svg",
+      ext: ".svg",
+    });
+  });
+</script>
+
 
 <%- include("partials/footer.ejs") %>

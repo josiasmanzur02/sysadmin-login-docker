@@ -326,6 +326,15 @@ body::before {
   filter: drop-shadow(0 0 10px rgba(0, 198, 255, 0.25));
 }
 
+#countryFlag img.emoji {
+  width: 120px;
+  max-width: 32vw;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 10px rgba(0, 198, 255, 0.25));
+}
+
 /* Input field */
 #userInput {
   width: 85%;
