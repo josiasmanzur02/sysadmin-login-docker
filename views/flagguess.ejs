@@ -28,7 +28,13 @@
         </h3>
       </div>
 
-      <h1 id="countryFlag"><%= question.flag %></h1>
+      <h1 
+        id="countryFlag" 
+        data-flag-emoji="<%= question.flag %>" 
+        data-country-name="<%= question.name %>"
+      >
+        <%= question.flag %>
+      </h1>
 
       <div class="answer-container">
         <input 
@@ -52,16 +58,51 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/twemoji.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-  // Render flag emoji as SVG images so they display on Windows too
+  // Render the flag with twemoji when possible; gracefully fall back to raw emoji if it fails
   document.addEventListener("DOMContentLoaded", () => {
     const flagEl = document.getElementById("countryFlag");
     if (!flagEl) return;
 
-    const emoji = flagEl.textContent.trim();
-    flagEl.innerHTML = twemoji.parse(emoji, {
-      folder: "svg",
-      ext: ".svg",
-    });
+    const emoji = (flagEl.dataset.flagEmoji || flagEl.textContent || "").trim();
+    const countryName = (flagEl.dataset.countryName || "country").trim();
+
+    const showInlineEmoji = () => {
+      flagEl.textContent = emoji || "🏳️";
+      flagEl.setAttribute("role", "img");
+      flagEl.setAttribute("aria-label", `Flag of ${countryName}`);
+    };
+
+    if (!emoji) {
+      showInlineEmoji();
+      return;
+    }
+
+    if (!window.twemoji) {
+      showInlineEmoji();
+      return;
+    }
+
+    try {
+      const parsed = twemoji.parse(emoji, { folder: "svg", ext: ".svg" });
+      if (!parsed) {
+        showInlineEmoji();
+        return;
+      }
+
+      flagEl.innerHTML = parsed;
+      const img = flagEl.querySelector("img.emoji");
+
+      if (!img) {
+        showInlineEmoji();
+        return;
+      }
+
+      img.alt = `Flag of ${countryName}`;
+      img.setAttribute("aria-label", img.alt);
+      img.addEventListener("error", showInlineEmoji, { once: true });
+    } catch (err) {
+      showInlineEmoji();
+    }
   });
 </script>
 
