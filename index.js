@@ -14,6 +14,8 @@ app.set("view engine", "ejs");
 
 let quiz = [];            // Stores flags from database
 
+const PORT = process.env.PORT || 3000;
+
 const dbConfig = {
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.DATABASE_SSL === "true" ? { rejectUnauthorized: false } : false,
@@ -345,6 +347,6 @@ app.use((req, res) => {
 });
 
 // Start the server
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 }); 
